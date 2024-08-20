@@ -1,0 +1,13 @@
+rules:
+  - id: weak-password
+    patterns:
+      - pattern: |
+          String $VAR = "password";
+      - pattern-not: |
+          String $VAR = System.getenv("PASSWORD");
+    message: "Hardcoded passwords should be avoided"
+    severity: ERROR
+    languages: [java]
+    metadata:
+      category: security
+      technology: java

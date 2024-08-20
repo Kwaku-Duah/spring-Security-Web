@@ -1,0 +1,380 @@
+{
+  "version": "2.2.0",
+  "summary": {
+    "title": "Web Security Fundamental Lab",
+    "owner": "Amo Samuel",
+    "description": "This platform allows customers to register and log in to easily manage their accounts. Once logged in, customers can create and manage their own products. Each product created is uniquely associated with the customer who owns it, enabling personalized management and ownership. The system ensures a seamless and secure experience for customers as they manage their products in one central location.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "Product",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.2.0",
+        "cells": [
+          {
+            "position": {
+              "x": 160,
+              "y": 70
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "User"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 1,
+            "id": "5db6e979-6a7f-4ab3-8419-56eeba067a92",
+            "data": {
+              "type": "tm.Actor",
+              "name": "User",
+              "description": "The user who will log into the system",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "providesAuthentication": true,
+              "threats": [
+                {
+                  "id": "04024140-fa9a-4869-9d14-c78e8e1ca39b",
+                  "title": "Customer Spoofing",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "An attacker could pretend to be a legitimate customer by stealing or guessing login credentials.",
+                  "mitigation": "Implement strong authentication mechanisms, such as multi-factor authentication (MFA) and complex passwords. Ensure secure storage of passwords using hashing and salting techniques.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": ""
+                },
+                {
+                  "id": "2a3d112f-2360-4e16-9143-5b3cb746049f",
+                  "title": "Customer Action Repudiation",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Repudiation",
+                  "description": "The customer may deny performing certain actions, such as making purchases or modifying account details, if there’s no logging or audit mechanism.",
+                  "mitigation": "Implement comprehensive logging and audit trails for all customer actions, including time-stamped records. Ensure logs are tamper-resistant and securely stored.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 450,
+              "y": 50
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Admin"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 3,
+            "id": "83d00e03-faba-4607-8cad-9004ddda721a",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Admin",
+              "description": "The Admin who will log into the system and view user information.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "providesAuthentication": false,
+              "threats": [
+                {
+                  "id": "898c1f26-cea0-435b-bcae-9cbcb1c5dfd6",
+                  "title": "Admin Spoofing",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "An unauthorized user may try to gain admin-level access to modify or delete data, especially if admin credentials are not securely protected.",
+                  "mitigation": "Enforce strong authentication for admin accounts, including MFA, and restrict access to critical areas of the application. Regularly review and update admin account credentials.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 4,
+                  "score": ""
+                },
+                {
+                  "id": "13923a7c-9f5f-47f2-bedc-c17ca4cdae12",
+                  "title": "Admin Privilege Escalation",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Repudiation",
+                  "description": "A user with lower privileges may attempt to exploit vulnerabilities to escalate their privileges to an admin level.",
+                  "mitigation": "Implement role-based access control (RBAC) to ensure that users have only the privileges they need. Regularly audit and review permissions for potential misuse.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 6,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 130,
+              "y": 360
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Web pages on disk"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "id": "ebf91cbf-bdcf-4e11-9208-f1835f63a41c",
+            "zIndex": 4,
+            "data": {
+              "type": "tm.Store",
+              "name": "Web pages on disk",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 420,
+              "y": 260
+            },
+            "size": {
+              "width": 100,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Web page"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "id": "d94d5596-37b9-4ccf-b9d8-a23499b55b5d",
+            "zIndex": 5,
+            "data": {
+              "type": "tm.Process",
+              "name": "Web page",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 680,
+              "y": 250
+            },
+            "size": {
+              "width": 100,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Database"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "id": "b41c7fee-5b9d-494f-91be-22b7a05bf950",
+            "zIndex": 6,
+            "data": {
+              "type": "tm.Process",
+              "name": "Database",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": []
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "c2352a4d-cd9a-4ea2-8c26-fcf789fba00e",
+            "source": {
+              "id": "83d00e03-faba-4607-8cad-9004ddda721a"
+            },
+            "target": {
+              "id": "b41c7fee-5b9d-494f-91be-22b7a05bf950"
+            },
+            "zIndex": 2,
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block",
+                  "width": 8,
+                  "height": 8
+                }
+              }
+            },
+            "data": {
+              "type": "tm.UsedBy",
+              "name": "Use",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": []
+            }
+          },
+          {
+            "id": "d52ac4eb-022d-42c2-aeb2-8db26eec8bfc",
+            "source": {
+              "id": "5db6e979-6a7f-4ab3-8419-56eeba067a92"
+            },
+            "target": {
+              "id": "d94d5596-37b9-4ccf-b9d8-a23499b55b5d"
+            },
+            "zIndex": 3,
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block",
+                  "width": 8,
+                  "height": 8
+                }
+              }
+            },
+            "data": {
+              "type": "tm.Uses",
+              "name": "Use",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": []
+            }
+          },
+          {
+            "id": "7b25d454-08fc-4871-bb36-b5bdb6e15461",
+            "source": {
+              "id": "d94d5596-37b9-4ccf-b9d8-a23499b55b5d"
+            },
+            "target": {
+              "id": "ebf91cbf-bdcf-4e11-9208-f1835f63a41c"
+            },
+            "zIndex": 4,
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block",
+                  "width": 8,
+                  "height": 8
+                }
+              }
+            },
+            "data": {
+              "type": "tm.Uses",
+              "name": "Use",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": []
+            }
+          },
+          {
+            "id": "9e59d834-1e6e-4d02-a88a-e8a9b02e2b0d",
+            "source": {
+              "id": "5db6e979-6a7f-4ab3-8419-56eeba067a92"
+            },
+            "target": {
+              "id": "b41c7fee-5b9d-494f-91be-22b7a05bf950"
+            },
+            "zIndex": 5,
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block",
+                  "width": 8,
+                  "height": 8
+                }
+              }
+            },
+            "data": {
+              "type": "tm.Uses",
+              "name": "Use",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
