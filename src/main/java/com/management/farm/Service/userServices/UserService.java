@@ -28,8 +28,20 @@ public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+ 
 
-
+    /**
+    * Registers a new user with the provided details.
+    * <p>
+    * This method checks if the email is already in use, and if not,
+    * it creates a new user with the provided information. The password
+    * is assigned to the user.
+    * </p>
+    *
+    * @param userDto The data transfer object containing user details.
+    * @return The newly registered user.
+    * @throws EmailAlreadyInUseException if the email is already registered.
+    */
     public User registerUser(UserDto userDto){
         if (userRepository.existsByEmail(userDto.getEmail())){
             throw new EmailAlreadyInUseException("Email already in use!");
@@ -42,6 +54,8 @@ public class UserService {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPhoneNumber(userDto.getPhoneNumber());
+
+        // password encoding to satisfy output encoding
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
          // Assign "GUEST" role
@@ -50,6 +64,7 @@ public class UserService {
  
         return userRepository.save(user);
     }
+
 
     public Map<String, Object> loginUser(String email, String password) throws Exception {
         Optional<User> userOpt = userRepository.findByEmail(email);
