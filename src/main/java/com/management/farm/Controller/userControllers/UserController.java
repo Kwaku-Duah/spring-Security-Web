@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.*;
 import com.management.farm.DTO.userDTOs.LoginDto;
 import com.management.farm.DTO.userDTOs.UserDto;
 import com.management.farm.Exception.UserExceptions.EmailAlreadyInUseException;
@@ -28,15 +28,27 @@ public class UserController {
    @Autowired
     private  UserService userService;
 
- 
+
+    /**
+     * Registers a new user.
+     * 
+     * @param userDto The data transfer object containing user details.
+     * @return The registered user.
+     */
     @PostMapping("/signup")
-    public ResponseEntity<User> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto){
         User registeredUser = userService.registerUser(userDto);
         return ResponseEntity.ok(registeredUser);
     }
 
+    /**
+     * Logs in a user.
+     * 
+     * @param loginDto The data transfer object containing login details.
+     * @return A response entity containing user details and a JWT token.
+     */
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<Map<String, Object>> loginUser(@Valid @RequestBody LoginDto loginDto) {
         try {
             Map<String, Object> response = userService.loginUser(loginDto.getEmail(), loginDto.getPassword());
             return ResponseEntity.ok(response);
