@@ -21,11 +21,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
 
+    
+    /**
+     * Constructs a JwtAuthenticationFilter with JWT utility and user details service.
+     *
+     * @param jwtUtil                  Utility for JWT operations.
+     * @param customUserDetailsService Service to load user details.
+     */
     public JwtAuthenticationFilter(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
     }
 
+
+
+
+
+   /**
+     * Filters incoming requests to authenticate the user based on the JWT token.
+     *
+     * @param request     HTTP request.
+     * @param response    HTTP response.
+     * @param filterChain Filter chain.
+     * @throws ServletException in case of servlet-related issues.
+     * @throws IOException      in case of I/O errors.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -51,6 +71,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
+
+    /**
+     * Extracts the JWT token from the Authorization header.
+     *
+     * @param request HTTP request.
+     * @return JWT token or null if not found.
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
 

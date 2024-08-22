@@ -10,7 +10,7 @@ import com.management.farm.Model.userModels.User;
 public class CustomUserDetails implements UserDetails {
 
     private User user;
-
+    // Authentication and authorization 
     public CustomUserDetails(User user) {
         this.user = user;
     }

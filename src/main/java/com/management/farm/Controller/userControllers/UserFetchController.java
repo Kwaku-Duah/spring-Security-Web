@@ -18,6 +18,7 @@ public class UserFetchController {
     @Autowired
     private UserService userService;
 
+    //Role Based Access Control 
     @GetMapping("/users")
     @Secured("ROLE_ADMIN") 
     public ResponseEntity<List<User>> getAllUsers() {
