@@ -13,6 +13,13 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
+
+    /**
+     * Finds an existing role by its name or creates and saves a new role if it does not exist.
+     *
+     * @param roleName the name of the role to find or create
+     * @return the existing or newly created Role
+     */
     public Role findOrCreateRole(String roleName) {
         Optional<Role> roleOpt = roleRepository.findByRole(roleName);
         if (roleOpt.isPresent()) {

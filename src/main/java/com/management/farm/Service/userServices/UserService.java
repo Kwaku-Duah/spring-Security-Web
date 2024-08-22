@@ -13,6 +13,7 @@ import com.management.farm.Model.userModels.Role;
 import com.management.farm.Model.userModels.User;
 import com.management.farm.Repository.userRepositories.UserRepository;
 import com.management.farm.Security.JwtUtil;
+import jakarta.validation.Valid;
 
 @Service
 public class UserService {
@@ -42,7 +43,7 @@ public class UserService {
     * @return The newly registered user.
     * @throws EmailAlreadyInUseException if the email is already registered.
     */
-    public User registerUser(UserDto userDto){
+    public User registerUser(@Valid UserDto userDto){
         if (userRepository.existsByEmail(userDto.getEmail())){
             throw new EmailAlreadyInUseException("Email already in use!");
         }
@@ -58,7 +59,7 @@ public class UserService {
         // password encoding to satisfy output encoding
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-         // Assign "GUEST" role
+         // Role Based Access Control
          Role guestRole = roleService.findOrCreateRole("GUEST");
          user.setRoles(Collections.singleton(guestRole));
  
@@ -66,12 +67,23 @@ public class UserService {
     }
 
 
+
+   /**
+     * Logs in a user and generates a JWT token.
+     *
+     * @param email    User email.
+     * @param password User password.
+     * @return Map containing user details and JWT token.
+     * @throws Exception if credentials are invalid.
+     */
     public Map<String, Object> loginUser(String email, String password) throws Exception {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             if (passwordEncoder.matches(password, user.getPassword())) {
 
+
+                // JWT token generation for authentication and authorization
                 String token = jwtUtil.generateToken(user.getId(), user.getRoles().iterator().next().getRole());
 
                 // Prepare response map with LinkedHashMap for ordered output
@@ -93,6 +105,12 @@ public class UserService {
         }
     }
 
+
+      /**
+     * Fetches all registered users.
+     *
+     * @return List of users.
+     */
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
