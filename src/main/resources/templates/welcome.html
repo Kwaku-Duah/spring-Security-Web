@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome aboard the poultry farming application</h1>
+    <p>You are signed in using GOOGLE OAUTH 2.0</p>
+    <p th:text="'Hello, ' + ${name} + '!'"></p>
+</div>
+
+<script>
+    // Set the session timeout period in milliseconds (e.g., 1 minute)
+    const sessionTimeout = 60 * 1000; // 1 minute
+
+    // Redirect to session expired page after sessionTimeout
+    setTimeout(() => {
+        window.location.href = '/session-expired'; // Redirect to session expired page
+    }, sessionTimeout);
+</script>
+
+</body>
+</html>

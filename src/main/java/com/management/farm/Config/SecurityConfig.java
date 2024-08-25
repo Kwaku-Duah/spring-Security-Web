@@ -13,8 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
+import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 
 @Configuration
 @EnableWebSecurity
@@ -35,14 +39,27 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configure(http))
             .sessionManagement(session -> session
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .sessionFixation().newSession()
+                    .maximumSessions(1)
+                    .expiredSessionStrategy(expiredSessionStrategy())  // Handles session expiration
+            )
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers("/api/users/**").permitAll()
+                    .requestMatchers("/**").permitAll()
                     .requestMatchers("/api/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
+            .oauth2Login(oauth2 -> oauth2
+                .successHandler(successHandler())
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+            )
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new PkiAuthenticationFilter(authenticationManager), JwtAuthenticationFilter.class); // Pass AuthenticationManager
+            .addFilterBefore(new PkiAuthenticationFilter(authenticationManager), JwtAuthenticationFilter.class);
 
         return http.build();
     }
@@ -55,5 +72,15 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new SimpleUrlAuthenticationSuccessHandler("/welcome");
+    }
+
+    @Bean
+    public SessionInformationExpiredStrategy expiredSessionStrategy() {
+        return new SimpleRedirectSessionInformationExpiredStrategy("/session-expired");
     }
 }

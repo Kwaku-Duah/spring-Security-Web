@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        .google-btn {
+            background-color: #db4437; /* Google Red */
+        }
+        .google-btn:hover {
+            background-color: #c23321;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to the Application</h1>
+    <a href="/signup">Sign Up</a>
+    <a href="/login">Login</a>
+
+    <!-- Sign Up with Google -->
+    <a href="/oauth2/authorization/google" class="google-btn">Sign Up with Google</a>
+    
+    <!-- Sign In with Google -->
+    <a href="/oauth2/authorization/google" class="google-btn">Sign In with Google</a>
+</div>
+
+</body>
+</html>
